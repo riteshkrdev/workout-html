@@ -3,323 +3,274 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roshan's Muscle Building Plan</title>
+
+<title>Workout Tracker</title>
 
 <style>
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
 body{
-    background:#f5f7fa;
-    color:#333;
-    line-height:1.6;
+background:#111827;
+color:white;
+padding:15px;
 }
 
 header{
-    background:#111827;
-    color:white;
-    text-align:center;
-    padding:25px;
+text-align:center;
+margin-bottom:20px;
 }
 
-header h1{
-    margin-bottom:10px;
+h1{
+font-size:28px;
 }
 
-.container{
-    width:95%;
-    max-width:1200px;
-    margin:auto;
-    padding:20px;
+.day{
+margin-bottom:20px;
+background:#1f2937;
+border-radius:12px;
+overflow:hidden;
 }
 
-.day-card{
-    background:white;
-    margin-bottom:25px;
-    border-radius:12px;
-    padding:20px;
-    box-shadow:0 3px 10px rgba(0,0,0,.1);
+.day-header{
+padding:15px;
+font-size:20px;
+font-weight:bold;
+background:#2563eb;
+cursor:pointer;
 }
 
-.day-card h2{
-    color:#2563eb;
-    margin-bottom:15px;
+.day-content{
+display:none;
+padding:15px;
 }
 
 .exercise{
-    border:1px solid #ddd;
-    border-radius:10px;
-    padding:15px;
-    margin-bottom:15px;
+display:flex;
+gap:15px;
+margin-bottom:20px;
+padding-bottom:15px;
+border-bottom:1px solid #374151;
 }
 
 .exercise img{
-    width:100%;
-    max-width:250px;
-    border-radius:10px;
-    margin-bottom:10px;
+width:120px;
+height:120px;
+object-fit:cover;
+border-radius:10px;
 }
 
-.exercise h3{
-    margin-bottom:5px;
+.exercise-info{
+flex:1;
 }
 
-.info{
-    background:#eef2ff;
-    padding:15px;
-    border-radius:10px;
-    margin-bottom:20px;
+.exercise-info h3{
+margin-bottom:8px;
 }
 
-footer{
-    text-align:center;
-    padding:20px;
-    background:#111827;
-    color:white;
-    margin-top:30px;
+.exercise-info p{
+margin-bottom:5px;
 }
 
-ul{
-    padding-left:20px;
+.exercise-info ul{
+margin-left:20px;
+margin-top:5px;
 }
+
+.checkbox{
+margin-top:10px;
+}
+
+button{
+padding:10px 15px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:#10b981;
+color:white;
+font-weight:bold;
+}
+
+.timer{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#2563eb;
+padding:15px;
+border-radius:12px;
+}
+
+.progress{
+background:#1f2937;
+padding:15px;
+margin-bottom:20px;
+border-radius:12px;
+text-align:center;
+}
+
+@media(max-width:768px){
+
+.exercise{
+flex-direction:column;
+}
+
+.exercise img{
+width:100%;
+height:auto;
+}
+
+}
+
 </style>
 </head>
 <body>
 
 <header>
-    <h1>💪 Roshan's Workout Plan</h1>
-    <p>Build Muscle • Lose Belly Fat • 6 Days Weekly</p>
+<h1>💪 Workout Plan</h1>
+<p>Build Muscle + Lose Belly Fat</p>
 </header>
 
-<div class="container">
+<div class="progress">
+<h2>Weekly Progress</h2>
+<p id="progressText">0% Completed</p>
+</div>
 
-<div class="info">
-<h2>Warm-Up (Daily)</h2>
+<div id="workoutContainer"></div>
+
+<div class="timer">
+<button onclick="startTimer(60)">60s Rest</button>
+</div>
+
+<script>
+
+let totalExercises = 0;
+let completedExercises = 0;
+
+fetch('workout.json')
+.then(res=>res.json())
+.then(data=>{
+
+const container=document.getElementById('workoutContainer');
+
+data.days.forEach(day=>{
+
+let dayDiv=document.createElement('div');
+dayDiv.className='day';
+
+let header=document.createElement('div');
+header.className='day-header';
+header.innerText=day.day;
+
+let content=document.createElement('div');
+content.className='day-content';
+
+header.onclick=()=>{
+content.style.display=
+content.style.display==='block'
+?'none':'block';
+};
+
+day.exercises.forEach(ex=>{
+
+totalExercises++;
+
+let card=document.createElement('div');
+card.className='exercise';
+
+card.innerHTML=`
+
+<img src="${ex.gif}" alt="${ex.name}">
+
+<div class="exercise-info">
+
+<h3>${ex.name}</h3>
+
+<p><b>Sets:</b> ${ex.sets}</p>
+<p><b>Reps:</b> ${ex.reps}</p>
+
 <ul>
-<li>Jumping Jacks – 1 min</li>
-<li>High Knees – 1 min</li>
-<li>Bodyweight Squats – 15 reps</li>
-<li>Arm Circles – 30 sec</li>
-<li>Push-Ups – 10 reps</li>
+${ex.tips.map(t=>`<li>${t}</li>`).join('')}
 </ul>
-</div>
 
-<!-- MONDAY -->
-<div class="day-card">
-<h2>Monday - Push A</h2>
-
-<div class="exercise">
-<img src="images/floor-press.jpg" alt="Floor Press">
-<h3>Dumbbell Floor Press</h3>
-<p>4 Sets × 10-12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/pushup.jpg" alt="Push Up">
-<h3>Push-Ups</h3>
-<p>3 Sets × Max Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/shoulder-press.jpg" alt="">
-<h3>Dumbbell Shoulder Press</h3>
-<p>4 Sets × 10-12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/lateral-raise.jpg" alt="">
-<h3>Lateral Raises</h3>
-<p>3 Sets × 15 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/tricep-extension.jpg" alt="">
-<h3>Overhead Tricep Extension</h3>
-<p>3 Sets × 12 Reps</p>
-</div>
-</div>
-
-<!-- TUESDAY -->
-<div class="day-card">
-<h2>Tuesday - Pull A</h2>
-
-<div class="exercise">
-<img src="images/one-arm-row.jpg" alt="">
-<h3>One Arm Row</h3>
-<p>4 Sets × 12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/bent-row.jpg" alt="">
-<h3>Bent Over Row</h3>
-<p>4 Sets × 12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/reverse-fly.jpg" alt="">
-<h3>Reverse Fly</h3>
-<p>3 Sets × 15 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/bicep-curl.jpg" alt="">
-<h3>Bicep Curl</h3>
-<p>4 Sets × 12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/hammer-curl.jpg" alt="">
-<h3>Hammer Curl</h3>
-<p>3 Sets × 12 Reps</p>
-</div>
-</div>
-
-<!-- WEDNESDAY -->
-<div class="day-card">
-<h2>Wednesday - Legs + Core</h2>
-
-<div class="exercise">
-<img src="images/goblet-squat.jpg" alt="">
-<h3>Goblet Squat</h3>
-<p>4 Sets × 15 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/bulgarian.jpg" alt="">
-<h3>Bulgarian Split Squat</h3>
-<p>3 Sets × 12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/rdl.jpg" alt="">
-<h3>Romanian Deadlift</h3>
-<p>4 Sets × 12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/plank.jpg" alt="">
-<h3>Plank</h3>
-<p>3 Sets × 60 sec</p>
-</div>
-</div>
-
-<!-- THURSDAY -->
-<div class="day-card">
-<h2>Thursday - Push B</h2>
-
-<div class="exercise">
-<img src="images/decline-pushup.jpg" alt="">
-<h3>Feet Elevated Push-Ups</h3>
-<p>4 Sets × Max Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/arnold-press.jpg" alt="">
-<h3>Arnold Press</h3>
-<p>4 Sets × 10 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/front-raise.jpg" alt="">
-<h3>Front Raise</h3>
-<p>3 Sets × 12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/kickback.jpg" alt="">
-<h3>Tricep Kickback</h3>
-<p>3 Sets × 15 Reps</p>
-</div>
-</div>
-
-<!-- FRIDAY -->
-<div class="day-card">
-<h2>Friday - Pull B</h2>
-
-<div class="exercise">
-<img src="images/renegade-row.jpg" alt="">
-<h3>Renegade Row</h3>
-<p>4 Sets × 10 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/wide-row.jpg" alt="">
-<h3>Wide Row</h3>
-<p>4 Sets × 12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/concentration-curl.jpg" alt="">
-<h3>Concentration Curl</h3>
-<p>3 Sets × 12 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/bicycle-crunch.jpg" alt="">
-<h3>Bicycle Crunch</h3>
-<p>3 Sets × 20 Reps</p>
-</div>
-</div>
-
-<!-- SATURDAY -->
-<div class="day-card">
-<h2>Saturday - Legs + Conditioning</h2>
-
-<div class="exercise">
-<img src="images/lunges.jpg" alt="">
-<h3>Walking Lunges</h3>
-<p>4 Sets × 15 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/jump-squat.jpg" alt="">
-<h3>Jump Squat</h3>
-<p>3 Sets × 15 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/burpee.jpg" alt="">
-<h3>Burpees</h3>
-<p>3 Rounds × 15 Reps</p>
-</div>
-
-<div class="exercise">
-<img src="images/mountain-climber.jpg" alt="">
-<h3>Mountain Climbers</h3>
-<p>3 Rounds × 30 sec</p>
-</div>
-</div>
-
-<div class="info">
-<h2>Cool Down</h2>
-<ul>
-<li>Hamstring Stretch</li>
-<li>Quad Stretch</li>
-<li>Shoulder Stretch</li>
-<li>Child Pose</li>
-<li>Deep Breathing</li>
-</ul>
-</div>
-
-<div class="info">
-<h2>Progression Plan</h2>
-<ul>
-<li>Weeks 1-2: Focus on Form</li>
-<li>Weeks 3-4: Increase Reps</li>
-<li>Weeks 5-6: Add Extra Set</li>
-<li>Weeks 7-8: Slow Reps + Supersets</li>
-</ul>
+<div class="checkbox">
+<input type="checkbox"
+class="exerciseCheck">
+Completed
 </div>
 
 </div>
+`;
 
-<footer>
-    <p>Stay Consistent • Eat Protein • Sleep 8 Hours</p>
-</footer>
+content.appendChild(card);
+
+});
+
+dayDiv.appendChild(header);
+dayDiv.appendChild(content);
+
+container.appendChild(dayDiv);
+
+});
+
+document
+.querySelectorAll('.exerciseCheck')
+.forEach(box=>{
+
+box.addEventListener('change',()=>{
+
+completedExercises=
+document.querySelectorAll('.exerciseCheck:checked').length;
+
+let percent=Math.round(
+(completedExercises/totalExercises)*100
+);
+
+document.getElementById('progressText')
+.innerText=percent+"% Completed";
+
+localStorage.setItem(
+'workoutProgress',
+completedExercises
+);
+
+});
+
+});
+
+});
+
+function startTimer(seconds){
+
+let remaining=seconds;
+
+let interval=setInterval(()=>{
+
+document.title=
+"Rest: "+remaining+"s";
+
+remaining--;
+
+if(remaining<0){
+
+clearInterval(interval);
+
+document.title=
+"Workout Complete";
+
+alert("Rest Time Over!");
+
+}
+
+},1000);
+
+}
+
+</script>
 
 </body>
 </html>
