@@ -1,0 +1,131 @@
+{
+  "days":[
+    {
+      "day":"Monday - Push A",
+      "exercises":[
+        {
+          "name":"Dumbbell Floor Press",
+          "sets":"4",
+          "reps":"10-12",
+          "gif":"https://placehold.co/300x300?text=Floor+Press",
+          "tips":[
+            "Keep shoulders back",
+            "Lower slowly"
+          ]
+        },
+        {
+          "name":"Push Ups",
+          "sets":"3",
+          "reps":"Max",
+          "gif":"https://placehold.co/300x300?text=Push+Up",
+          "tips":[
+            "Body straight",
+            "Chest touches floor"
+          ]
+        },
+        {
+          "name":"Shoulder Press",
+          "sets":"4",
+          "reps":"10-12",
+          "gif":"https://placehold.co/300x300?text=Shoulder+Press",
+          "tips":[
+            "Keep core tight"
+          ]
+        }
+      ]
+    },
+
+    {
+      "day":"Tuesday - Pull A",
+      "exercises":[
+        {
+          "name":"One Arm Row",
+          "sets":"4",
+          "reps":"12",
+          "gif":"https://placehold.co/300x300?text=One+Arm+Row",
+          "tips":[
+            "Pull elbow back"
+          ]
+        },
+        {
+          "name":"Hammer Curl",
+          "sets":"3",
+          "reps":"12",
+          "gif":"https://placehold.co/300x300?text=Hammer+Curl",
+          "tips":[
+            "Control movement"
+          ]
+        }
+      ]
+    },
+
+    {
+      "day":"Wednesday - Legs + Core",
+      "exercises":[
+        {
+          "name":"Goblet Squat",
+          "sets":"4",
+          "reps":"15",
+          "gif":"https://placehold.co/300x300?text=Goblet+Squat",
+          "tips":[
+            "Keep chest up"
+          ]
+        },
+        {
+          "name":"Romanian Deadlift",
+          "sets":"4",
+          "reps":"12",
+          "gif":"https://placehold.co/300x300?text=RDL",
+          "tips":[
+            "Hip hinge"
+          ]
+        }
+      ]
+    },
+
+    {
+      "day":"Thursday - Push B",
+      "exercises":[
+        {
+          "name":"Arnold Press",
+          "sets":"4",
+          "reps":"10",
+          "gif":"https://placehold.co/300x300?text=Arnold+Press",
+          "tips":[
+            "Rotate while pressing"
+          ]
+        }
+      ]
+    },
+
+    {
+      "day":"Friday - Pull B",
+      "exercises":[
+        {
+          "name":"Renegade Row",
+          "sets":"4",
+          "reps":"10",
+          "gif":"https://placehold.co/300x300?text=Renegade+Row",
+          "tips":[
+            "Keep hips stable"
+          ]
+        }
+      ]
+    },
+
+    {
+      "day":"Saturday - Conditioning",
+      "exercises":[
+        {
+          "name":"Burpees",
+          "sets":"3",
+          "reps":"15",
+          "gif":"https://placehold.co/300x300?text=Burpees",
+          "tips":[
+            "Explosive movement"
+          ]
+        }
+      ]
+    }
+  ]
+}
